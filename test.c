@@ -3,6 +3,9 @@
 #include <string.h>
 #include "graph.h"
 
+// const char emoji_tick[] = "\xF0\x9F\x27\x05";
+const char emoji_tick[] = "✅";
+
 void test_list() {
 	graph_node_t node = graph_node_new("Alpha");
 	graph_node_t node2 = graph_node_new("Beta");
@@ -64,14 +67,14 @@ void test_link() {
 
 }
 
-int main() {
+int main() {	
 	test_node();
-	puts("node OK");
+	puts("Node ✅");
 
 	test_list();
-	puts("list OK");
+	puts("List ✅");
 
 	test_link();
-	puts("link OK");
+	puts("Link ✅");
 }
 
