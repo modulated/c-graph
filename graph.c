@@ -36,7 +36,7 @@ graph_node_t graph_node_new(char* id) {
 }
 
 void graph_node_link(graph_node_t* n1, graph_node_t* n2, float weight) {
-	if (n1->count > LINKMAX || n2->count > LINKMAX)
+	if (n1->count >= LINKMAX || n2->count >= LINKMAX)
 	{
 		puts("ERROR: Node has too many links");
 		exit(1);
@@ -48,8 +48,7 @@ void graph_node_link(graph_node_t* n1, graph_node_t* n2, float weight) {
 	l.weight = weight;
 	n1->links[n1->count++] = l;
 	l.node = n2;
-	n2->links[n2->count++] = l;
-	// add to list of graph
+	n2->links[n2->count++] = l;	
 	
 	if (n1->graph == NULL) {
 		if (n2->graph == NULL) {
@@ -57,15 +56,17 @@ void graph_node_link(graph_node_t* n1, graph_node_t* n2, float weight) {
 			exit(1);
 		}
 		n1->graph = n2->graph;
-		list_add(&n1->graph->list, n1);
+		//list_add(&n1->graph->list, n1);
 	}
 	
 	if (n2->graph == NULL) {
 		n2->graph = n1->graph;
-		list_add(&n2->graph->list, n2);
+		//list_add(&n1->graph->list, n2);
 	}
-	printf("N1: %p, N2: %p\n", n1->graph, n2->graph);
-	n2->graph->count = 2; //list_count(&n2->graph->list);
+	
+	//printf("N1: %p, N2: %p\n", n1->graph, n2->graph);
+	n1->graph->count = list_count(&n1->graph->list);
+
 }
 
 list_node_t* list_node_new(graph_node_t* n) {
@@ -76,8 +77,17 @@ list_node_t* list_node_new(graph_node_t* n) {
 }
 
 int list_count(list_t* l) {
+	if (l == NULL) {
+		puts("List not initialized");
+		exit(1);
+	}
+
 	list_node_t* p = l->start;
 	int counter = 0;
+	if (p == NULL) {
+		puts("Unallocated node");
+		exit(1);
+	}
 	while (p != NULL) {
 		counter++;
 		p = p->next;

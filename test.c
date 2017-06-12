@@ -23,7 +23,19 @@ void test_list() {
 	res = list_find(&l, &node2);
 	assert(res == 1);
 	puts("list_find OK");
+	
+	res = list_count(&l);
+	assert(res == 2);
+
+	list_t l2 = list_new(&node);
+	res = list_count(&l2);
+	assert(res == 1);
+	puts("list_count OK");
+
+	graph_t g = graph_new(&node);
+	list_count(&g.list);
 }
+
 
 void test_node() {
 	
