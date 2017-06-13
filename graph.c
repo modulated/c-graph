@@ -73,6 +73,7 @@ list_node_t* list_node_new(graph_node_t* n) {
 	list_node_t* l = malloc(sizeof(list_node_t));
 	l->node = n;
 	l->next = NULL;
+	l->prev = NULL;
 	return l;
 }
 
@@ -107,6 +108,7 @@ list_t list_new(graph_node_t* n) {
 void list_add(list_t* l, graph_node_t* n) {
 	list_node_t* new_node = list_node_new(n);
 	l->end->next = new_node;
+	new_node->prev = l->end;
 	l->end = new_node;
 }
 
@@ -121,4 +123,22 @@ int list_find(list_t* l, graph_node_t* n) {
 	return 0;
 }
 
+void list_remove(list_t* l, graph_node_t* n) {
+	list_node_t* p;
+	p = l->start;
+	while (p != NULL) {
+		printf("P: %p\n", p);
+		if (n == p->node) {
+			if (p->prev != NULL)
+				p->prev->next = p->next;
+			
+			if (p->next != NULL)
+				p->next->prev = p->prev;
+			return;
+		}
+		p = p->next;
+	}
 
+	puts("ERROR: Could not find node to remove.");
+	exit(1);
+}

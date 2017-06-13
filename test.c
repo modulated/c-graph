@@ -27,8 +27,14 @@ void test_list() {
 	assert(res == 1);
 	puts("list_find OK");
 	
+	graph_node_t node3 = graph_node_new("cat");
+	list_add(&l, &node3);
+	res = list_count(&l);
+	assert(res == 3);
+	list_remove(&l, &node2);
 	res = list_count(&l);
 	assert(res == 2);
+	puts("list_remove OK");
 
 	list_t l2 = list_new(&node);
 	res = list_count(&l2);

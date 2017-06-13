@@ -13,6 +13,7 @@ typedef struct {
 typedef struct list_node_s {
 	graph_node_t* node;
 	struct list_node_s* next;
+	struct list_node_s* prev;
 } list_node_t;
 
 typedef struct {
@@ -44,3 +45,4 @@ list_t list_new(graph_node_t* n);
 void list_add(list_t* l, graph_node_t* n);
 int list_find(list_t* l, graph_node_t* n);
 int list_count(list_t* l);
+void list_remove(list_t* l, graph_node_t* n);
